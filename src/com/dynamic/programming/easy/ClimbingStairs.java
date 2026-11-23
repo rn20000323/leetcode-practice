@@ -22,15 +22,20 @@ Explanation: There are three ways to climb to the top.
 3. 2 steps + 1 step
  */
 
+import java.util.HashMap;
+import java.util.Map;
+
 class Solution {
     public int climbStairs(int n) {
-        return climbStairs(0, n);
+        return climbStairs(0, n, new HashMap<>());
     }
 
-    private int climbStairs(int start, int n){
+    private int climbStairs(int start, int n, Map<Integer, Integer> memo){
+        if(memo.containsKey(start)) return memo.get(start);
         if (start == n) return 1;
         if (start > n) return 0;
-        return climbStairs(start+1, n)+climbStairs(start+2, n);
+        memo.put(start, climbStairs(start+1, n, memo)+climbStairs(start+2, n, memo));
+        return memo.get(start);
     }
 }
 
